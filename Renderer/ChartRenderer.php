@@ -82,12 +82,12 @@ class ChartRenderer implements RendererInterface
     public static function getChartTypes()
     {
         return [
-            self::BAR_CHART => 'Bar chart',
-            self::LINE_CHART => 'Line chart',
-            self::RADAR_CHART => 'Radar chart',
-            self::POLAR_CHART => 'Polar chart',
-            self::PIE_CHART => 'Pie chart',
-            self::DOUGHNUT_CHART => 'Doughnut chart',
+            'Bar chart' => self::BAR_CHART,
+            'Line chart' => self::LINE_CHART,
+            'Radar chart' => self::RADAR_CHART,
+            'Polar chart' => self::POLAR_CHART,
+            'Pie chart' => self::PIE_CHART,
+            'Doughnut chart' => self::DOUGHNUT_CHART,
         ];
     }
 }
