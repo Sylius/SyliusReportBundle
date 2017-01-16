@@ -41,7 +41,7 @@ class RegisterRenderersPass implements CompilerPassInterface
             }
 
             $name = $attributes[0]['renderer'];
-            $renderers[$name] = $attributes[0]['label'];
+            $renderers[$attributes[0]['label']] = $name;
             $registry->addMethodCall('register', [$name, new Reference($id)]);
         }
 

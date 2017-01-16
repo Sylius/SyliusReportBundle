@@ -31,9 +31,9 @@ abstract class TimePeriod implements DataFetcherInterface
     public static function getPeriodChoices()
     {
         return [
-            self::PERIOD_DAY => 'Daily',
-            self::PERIOD_MONTH => 'Monthly',
-            self::PERIOD_YEAR => 'Yearly',
+            'Daily' => self::PERIOD_DAY,
+            'Monthly' => self::PERIOD_MONTH,
+            'Yearly' => self::PERIOD_YEAR,
         ];
     }
 

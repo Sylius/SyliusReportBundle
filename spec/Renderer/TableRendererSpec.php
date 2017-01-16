@@ -12,9 +12,10 @@
 namespace spec\Sylius\Bundle\ReportBundle\Renderer;
 
 use PhpSpec\ObjectBehavior;
+use Sylius\Bundle\ReportBundle\Form\Type\Renderer\TableConfigurationType;
+use Sylius\Bundle\ReportBundle\Renderer\TableRenderer;
 use Sylius\Component\Report\DataFetcher\Data;
 use Sylius\Component\Report\Model\ReportInterface;
-use Sylius\Component\Report\Renderer\DefaultRenderers;
 use Sylius\Component\Report\Renderer\RendererInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -24,22 +25,22 @@ use Symfony\Component\Templating\EngineInterface;
  */
 final class TableRendererSpec extends ObjectBehavior
 {
-    function let(EngineInterface $templating)
+    public function let(EngineInterface $templating)
     {
         $this->beConstructedWith($templating);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Sylius\Bundle\ReportBundle\Renderer\TableRenderer');
+        $this->shouldHaveType(TableRenderer::class);
     }
 
-    function it_should_implement_renderer_interface()
+    public function it_should_implement_renderer_interface()
     {
         $this->shouldImplement(RendererInterface::class);
     }
 
-    function it_renders_data_with_given_configuration(ReportInterface $report, Data $reportData, $templating)
+    public function it_renders_data_with_given_configuration(ReportInterface $report, Data $reportData, $templating)
     {
         $reportData->getLabels()->willReturn(['month', 'user_total']);
         $reportData->getData()->willReturn(['month1' => '50', 'month2' => '40']);
@@ -61,8 +62,8 @@ final class TableRendererSpec extends ObjectBehavior
         $this->render($report, $reportData)->shouldReturn('<div>Table Report</div>');
     }
 
-    function it_is_a_table_type()
+    public function it_is_a_table_type()
     {
-        $this->getType()->shouldReturn(DefaultRenderers::TABLE);
+        $this->getType()->shouldReturn(TableConfigurationType::class);
     }
 }

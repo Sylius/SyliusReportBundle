@@ -3,12 +3,12 @@
 {% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
 
 {% if values|length > 0 %}
-    <table id="results" class="table table-bordered table-condensed">
+    <table id="results" class="ui sortable stackable celled table">
         <thead>
             <tr>
-                <th>{{ sylius_resource_sort('id', '#') }}</th>
+                <th></th>
                 {% for label in labels %}
-                    <th>{{ sylius_resource_sort('label', label) }}</th>
+                    <th>{{ label }}</th>
                 {% endfor %}
             </tr>
         </thead>
