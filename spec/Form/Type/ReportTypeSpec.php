@@ -15,12 +15,17 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\Bundle\ReportBundle\Form\EventListener\BuildReportDataFetcherFormSubscriber;
 use Sylius\Bundle\ReportBundle\Form\EventListener\BuildReportRendererFormSubscriber;
+use Sylius\Bundle\ReportBundle\Form\Type\DataFetcher\DataFetcherChoiceType;
+use Sylius\Bundle\ReportBundle\Form\Type\Renderer\RendererChoiceType;
+use Sylius\Bundle\ReportBundle\Form\Type\ReportType;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Sylius\Component\Report\DataFetcher\DataFetcherInterface;
 use Sylius\Component\Report\Model\Report;
 use Sylius\Component\Report\Renderer\RendererInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormConfigInterface;
@@ -33,22 +38,22 @@ use Symfony\Component\Form\FormView;
  */
 final class ReportTypeSpec extends ObjectBehavior
 {
-    function let(ServiceRegistryInterface $rendererRegistry, ServiceRegistryInterface $dataFetcherRegistry)
+    public function let(ServiceRegistryInterface $rendererRegistry, ServiceRegistryInterface $dataFetcherRegistry)
     {
         $this->beConstructedWith(Report::class, ['sylius'], $rendererRegistry, $dataFetcherRegistry);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Sylius\Bundle\ReportBundle\Form\Type\ReportType');
+        $this->shouldHaveType(ReportType::class);
     }
 
-    function it_should_be_abstract_resource_type_object()
+    public function it_should_be_abstract_resource_type_object()
     {
         $this->shouldHaveType(AbstractResourceType::class);
     }
 
-    function it_build_form_with_proper_fields(
+    public function it_build_form_with_proper_fields(
         FormBuilderInterface $builder,
         FormFactoryInterface $factory,
         $dataFetcherRegistry,
@@ -58,10 +63,10 @@ final class ReportTypeSpec extends ObjectBehavior
     ) {
         $builder->getFormFactory()->willReturn($factory);
 
-        $builder->add('name', 'text', Argument::any())->shouldBeCalled()->willReturn($builder);
-        $builder->add('description', 'textarea', Argument::any())->shouldBeCalled()->willReturn($builder);
-        $builder->add('renderer', 'sylius_renderer_choice', Argument::any())->shouldBeCalled()->willReturn($builder);
-        $builder->add('dataFetcher', 'sylius_data_fetcher_choice', Argument::any())->shouldBeCalled()->willReturn($builder);
+        $builder->add('name', TextType::class, Argument::any())->shouldBeCalled()->willReturn($builder);
+        $builder->add('description', TextareaType::class, Argument::any())->shouldBeCalled()->willReturn($builder);
+        $builder->add('renderer', RendererChoiceType::class, Argument::any())->shouldBeCalled()->willReturn($builder);
+        $builder->add('dataFetcher', DataFetcherChoiceType::class, Argument::any())->shouldBeCalled()->willReturn($builder);
 
         $builder->addEventSubscriber(Argument::type(BuildReportRendererFormSubscriber::class))->shouldBeCalled()->willReturn($builder);
         $builder->addEventSubscriber(Argument::type(BuildReportDataFetcherFormSubscriber::class))->shouldBeCalled()->willReturn($builder);
@@ -95,7 +100,7 @@ final class ReportTypeSpec extends ObjectBehavior
         $this->buildForm($builder, []);
     }
 
-    function it_builds_view(
+    public function it_builds_view(
         FormConfigInterface $config,
         FormView $view,
         FormInterface $form,
@@ -113,10 +118,5 @@ final class ReportTypeSpec extends ObjectBehavior
         $formUserRegistration->createView($view)->shouldBeCalled();
 
         $this->buildView($view, $form, []);
-    }
-
-    function it_has_name()
-    {
-        $this->getName()->shouldReturn('sylius_report');
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "sylius/report-bundle",
+    "name": "pitoune/report-bundle",
     "type": "symfony-bundle",
     "description": "Flexible report system for Symfony2 ecommerce applications.",
     "keywords": ["report", "shop", "webshop", "ecommerce", "sylius"],
@@ -35,12 +35,12 @@
         "sylius/report": "^1.0",
         "sylius/money-bundle": "^1.0",
         "sylius/resource-bundle": "^1.0",
-        "symfony/framework-bundle": "^2.8"
+        "symfony/framework-bundle": "^3.2"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0",
-        "symfony/form": "^2.8",
-        "symfony/validator": "^2.8"
+        "symfony/form": "^3.2",
+        "symfony/validator": "^3.2"
     },
     "config": {
         "bin-dir": "bin"
