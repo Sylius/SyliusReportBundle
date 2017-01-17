@@ -46,7 +46,7 @@ class ReportController extends ResourceController
         );
 
         if ($request->query->has('configuration')) {
-            $configurationForm->submit($request->request->get($configurationForm->getName()));
+            $configurationForm->submit($request->query->get($configurationForm->getName()));
         }
 
         return $this->container->get('templating')->renderResponse($configuration->getTemplate('show.html'), [
@@ -75,7 +75,7 @@ class ReportController extends ResourceController
             return $this->container->get('templating')->renderResponse('SyliusReportBundle::noDataTemplate.html.twig');
         }
 
-        $configuration = ($request->query->has('configuration')) ? $request->query->get('configuration', $configuration) : $report->getDataFetcherConfiguration();
+        $configuration = empty($configuration) ? $report->getDataFetcherConfiguration() : $configuration;
         $configuration['baseCurrency'] = $currencyProvider->getDefaultCurrencyCode();
 
         $data = $this->getReportDataFetcher()->fetch($report, $configuration);

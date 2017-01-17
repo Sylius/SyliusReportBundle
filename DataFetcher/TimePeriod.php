@@ -22,6 +22,7 @@ use Sylius\Component\Report\DataFetcher\DataFetcherInterface;
 abstract class TimePeriod implements DataFetcherInterface
 {
     const PERIOD_DAY = 'day';
+    const PERIOD_WEEK = 'week';
     const PERIOD_MONTH = 'month';
     const PERIOD_YEAR = 'year';
 
@@ -32,6 +33,7 @@ abstract class TimePeriod implements DataFetcherInterface
     {
         return [
             'Daily' => self::PERIOD_DAY,
+            'Weekly' => self::PERIOD_WEEK,
             'Monthly' => self::PERIOD_MONTH,
             'Yearly' => self::PERIOD_YEAR,
         ];
@@ -51,6 +53,9 @@ abstract class TimePeriod implements DataFetcherInterface
         switch ($configuration['period']) {
             case self::PERIOD_DAY:
                 $this->setExtraConfiguration($configuration, 'P1D', '%a', 'Y-m-d', ['date']);
+                break;
+            case self::PERIOD_WEEK:
+                $this->setExtraConfiguration($configuration, 'P1W', '%W', 'W', ['week']);
                 break;
             case self::PERIOD_MONTH:
                 $this->setExtraConfiguration($configuration, 'P1M', '%m', 'F Y', ['month', 'year']);
