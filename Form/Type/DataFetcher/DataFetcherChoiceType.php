@@ -9,27 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Sylius\Bundle\ReportBundle\Form\Type\Renderer;
+namespace Sylius\Bundle\ReportBundle\Form\Type\DataFetcher;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Renderer choice type.
- *
- * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
+ * @author Łukasz Chruściel <lukasz.chrusciel@lakion.com>
  */
-class RendererChoiceType extends AbstractType
+class DataFetcherChoiceType extends AbstractType
 {
     /**
      * @var array
      */
-    protected $renderers;
+    protected $dataFetchers;
 
-    public function __construct(array $renderers)
+    /**
+     * @param array $dataFetchers
+     */
+    public function __construct($dataFetchers)
     {
-        $this->renderers = $renderers;
+        $this->dataFetchers = $dataFetchers;
     }
 
     /**
@@ -39,7 +40,7 @@ class RendererChoiceType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'choices' => $this->renderers,
+                'choices' => $this->dataFetchers,
             ])
         ;
     }

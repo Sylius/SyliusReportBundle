@@ -12,9 +12,10 @@
 namespace spec\Sylius\Bundle\ReportBundle\Renderer;
 
 use PhpSpec\ObjectBehavior;
+use Sylius\Bundle\ReportBundle\Form\Type\Renderer\ChartConfigurationType;
+use Sylius\Bundle\ReportBundle\Renderer\ChartRenderer;
 use Sylius\Component\Report\DataFetcher\Data;
 use Sylius\Component\Report\Model\ReportInterface;
-use Sylius\Component\Report\Renderer\DefaultRenderers;
 use Sylius\Component\Report\Renderer\RendererInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -24,22 +25,22 @@ use Symfony\Component\Templating\EngineInterface;
  */
 final class ChartRendererSpec extends ObjectBehavior
 {
-    function let(EngineInterface $templating)
+    public function let(EngineInterface $templating)
     {
         $this->beConstructedWith($templating);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Sylius\Bundle\ReportBundle\Renderer\ChartRenderer');
+        $this->shouldHaveType(ChartRenderer::class);
     }
 
-    function it_should_implement_renderer_interface()
+    public function it_should_implement_renderer_interface()
     {
         $this->shouldImplement(RendererInterface::class);
     }
 
-    function it_renders_data_with_given_configuration(ReportInterface $report, Data $reportData, $templating)
+    public function it_renders_data_with_given_configuration(ReportInterface $report, Data $reportData, $templating)
     {
         $reportData->getData()->willReturn(['month1' => '50', 'month2' => '40']);
 
@@ -59,8 +60,8 @@ final class ChartRendererSpec extends ObjectBehavior
         $this->render($report, $reportData)->shouldReturn('<div>Chart Report</div>');
     }
 
-    function it_is_a_chart_type()
+    public function it_is_a_chart_type()
     {
-        $this->getType()->shouldReturn(DefaultRenderers::CHART);
+        $this->getType()->shouldReturn(ChartConfigurationType::class);
     }
 }

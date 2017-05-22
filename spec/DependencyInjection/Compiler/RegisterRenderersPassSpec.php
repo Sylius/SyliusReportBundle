@@ -22,12 +22,12 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 final class RegisterRenderersPassSpec extends ObjectBehavior
 {
-    function it_should_implement_compiler_pass_interface()
+    public function it_should_implement_compiler_pass_interface()
     {
         $this->shouldImplement(CompilerPassInterface::class);
     }
 
-    function it_processes_with_given_container(ContainerBuilder $container, Definition $rendererDefinition)
+    public function it_processes_with_given_container(ContainerBuilder $container, Definition $rendererDefinition)
     {
         $container->hasDefinition('sylius.registry.report.renderer')->willReturn(true);
         $container->getDefinition('sylius.registry.report.renderer')->willReturn($rendererDefinition);
@@ -40,12 +40,12 @@ final class RegisterRenderersPassSpec extends ObjectBehavior
         $container->findTaggedServiceIds('sylius.report.renderer')->willReturn($rendererServices);
 
         $rendererDefinition->addMethodCall('register', ['test', new Reference('sylius.form.type.renderer.test')])->shouldBeCalled();
-        $container->setParameter('sylius.report.renderers', ['test' => 'Test renderer'])->shouldBeCalled();
+        $container->setParameter('sylius.report.renderers', ['Test renderer' => 'test'])->shouldBeCalled();
 
         $this->process($container);
     }
 
-    function it_does_not_process_if_container_has_not_proper_definition(ContainerBuilder $container)
+    public function it_does_not_process_if_container_has_not_proper_definition(ContainerBuilder $container)
     {
         $container->hasDefinition('sylius.registry.report.renderer')->willReturn(false);
         $container->getDefinition('sylius.registry.report.renderer')->shouldNotBeCalled();
@@ -53,7 +53,7 @@ final class RegisterRenderersPassSpec extends ObjectBehavior
         $this->process($container);
     }
 
-    function it_throws_exception_if_any_renderer_has_improper_attributes(ContainerBuilder $container, Definition $rendererDefinition)
+    public function it_throws_exception_if_any_renderer_has_improper_attributes(ContainerBuilder $container, Definition $rendererDefinition)
     {
         $container->hasDefinition('sylius.registry.report.renderer')->willReturn(true);
         $container->getDefinition('sylius.registry.report.renderer')->willReturn($rendererDefinition);

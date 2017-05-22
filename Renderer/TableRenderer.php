@@ -11,9 +11,9 @@
 
 namespace Sylius\Bundle\ReportBundle\Renderer;
 
+use Sylius\Bundle\ReportBundle\Form\Type\Renderer\TableConfigurationType;
 use Sylius\Component\Report\DataFetcher\Data;
 use Sylius\Component\Report\Model\ReportInterface;
-use Sylius\Component\Report\Renderer\DefaultRenderers;
 use Sylius\Component\Report\Renderer\RendererInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -67,6 +67,6 @@ class TableRenderer implements RendererInterface
      */
     public function getType()
     {
-        return DefaultRenderers::TABLE;
+        return TableConfigurationType::class;
     }
 }
