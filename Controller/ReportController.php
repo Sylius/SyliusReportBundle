@@ -65,7 +65,7 @@ class ReportController extends ResourceController
      */
     public function embedAction(Request $request, $report, array $configuration = [])
     {
-        $currencyProvider = $this->get('sylius.currency_provider');
+        $currency = $this->get('sylius.context.currency')->getCurrencyCode();
 
         if (!$report instanceof ReportInterface) {
             $report = $this->getReportRepository()->findOneBy(['code' => $report]);
@@ -76,7 +76,7 @@ class ReportController extends ResourceController
         }
 
         $configuration = empty($configuration) ? $report->getDataFetcherConfiguration() : $configuration;
-        $configuration['baseCurrency'] = $currencyProvider->getDefaultCurrencyCode();
+        $configuration['baseCurrency'] = $currency;
 
         $data = $this->getReportDataFetcher()->fetch($report, $configuration);
 
